@@ -1,0 +1,28 @@
+name: CI with Cache
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Use cache
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: cache-3c555b8
+
+      # Show cache result
+      - name: prime-cache-3c555b8
+        run: echo "Cache result: ${{ steps.cache.outputs.cache-hit }}"
+
+      - name: Install dependencies
+        run: pip install fastapi numpy
