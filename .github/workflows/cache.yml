@@ -17,8 +17,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      # Ensure cache path exists
-      - name: Prepare cache dir
+      - name: Prepare cache directory
         run: mkdir -p ~/.cache/pip
 
       - name: Cache dependencies
