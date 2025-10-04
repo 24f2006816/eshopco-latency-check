@@ -17,9 +17,11 @@ jobs:
         with:
           python-version: '3.11'
 
+      # Create the pip cache directory before caching
       - name: Prepare cache directory
         run: mkdir -p ~/.cache/pip
 
+      # Cache step with ID "cache"
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v4
@@ -27,8 +29,10 @@ jobs:
           path: ~/.cache/pip
           key: cache-3c555b8
 
+      # ✅ Step explicitly named "prime-cache-3c555b8"
       - name: prime-cache-3c555b8
         run: echo "Cache result: ${{ steps.cache.outputs.cache-hit }}"
 
-      - name: Install deps
+      # Example install step
+      - name: Install dependencies
         run: pip install fastapi numpy
