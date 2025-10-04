@@ -1,0 +1,39 @@
+name: Cache Dependencies
+
+on:
+  workflow_dispatch: # Manual trigger from Actions tab
+
+jobs:
+  cache-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: prime-cache-3c555b8
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: cache-3c555b8
+
+      - name: Show cache status
+        run: echo "Cache result: ${{ steps.cache.outputs.cache-hit }}"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install requests
+
+      - name: Run sample script
+        run: |
+          python - <<'EOF'
+          import requests
+          print("✅ Sample run successful! Cache is active.")
+          EOF
