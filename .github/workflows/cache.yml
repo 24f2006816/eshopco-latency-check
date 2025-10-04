@@ -12,7 +12,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Use cache
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v4
@@ -20,9 +24,8 @@ jobs:
           path: ~/.cache/pip
           key: cache-3c555b8
 
-      # Show cache result
       - name: prime-cache-3c555b8
         run: echo "Cache result: ${{ steps.cache.outputs.cache-hit }}"
 
-      - name: Install dependencies
+      - name: Install deps
         run: pip install fastapi numpy
